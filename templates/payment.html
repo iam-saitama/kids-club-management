@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Оплата{% endblock %}
+
+{% block content %}
+    <h2>Выберите метод оплаты</h2>
+    <form action="/payments/payme/create" method="post" class="ajax-form">
+        <label for="amount">Сумма</label>
+        <input type="number" id="amount" name="amount" required>
+
+        <button type="submit">Оплатить через Payme</button>
+        <p class="message"></p>
+    </form>
+
+    <form action="/payments/click/create" method="post" class="ajax-form">
+        <label for="amount2">Сумма</label>
+        <input type="number" id="amount2" name="amount" required>
+
+        <button type="submit">Оплатить через Click</button>
+        <p class="message"></p>
+    </form>
+{% endblock %}

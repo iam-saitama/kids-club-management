@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+    <h2>Регистрация</h2>
+    <p>Выберите вашу роль:</p>
+
+    <a href="/register/teacher">
+        <button type="button" class="button">Я учитель</button>
+    </a>
+
+    <a href="/register/parent">
+        <button type="button" class="button">Я родитель</button>
+    </a>
+{% endblock %}

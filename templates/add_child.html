@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Добавить ребенка{% endblock %}
+
+{% block content %}
+    <h2>Добавление ребенка</h2>
+    <form action="/parents/{{ parent_id }}/add-child" method="post" class="ajax-form">
+        <label for="search_query">Имя и фамилия ребенка</label>
+        <input type="text" id="search_query" name="search_query" required>
+
+        <label for="birth_date">Дата рождения ребенка</label>
+        <input type="date" id="birth_date" name="birth_date" required>
+
+        <button type="submit">Добавить</button>
+        <p class="message"></p>
+    </form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Создать урок{% endblock %}
+
+{% block content %}
+    <h2>Создание урока</h2>
+    <form action="/lessons/" method="post" class="ajax-form">
+        <label for="name">Название урока</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="description">Описание</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <button type="submit">Создать</button>
+        <p class="message"></p>
+    </form>
+{% endblock %}
