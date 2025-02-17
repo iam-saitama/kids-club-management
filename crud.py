@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from models import Admin, Parent, Child, Lesson, Payment, Teacher
 from schemas import AdminCreate, ParentCreate, ChildCreateByAdmin, LessonCreate, PaymentCreate, TeacherCreate
 from security import get_password_hash
+from fastapi import HTTPException, status
 
 
 # Создание админа
@@ -9,12 +10,12 @@ def create_admin(db: Session, admin: AdminCreate):
     # Проверка на уникальность username
     db_admin = db.query(Admin).filter(Admin.username == admin.username).first()
     if db_admin:
-        raise ValueError("Такой username уже существует")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="Имя пользователя уже занято.")
 
     hashed_password = get_password_hash(admin.password)
     db_admin = Admin(username=admin.username,
-                     hashed_password=hashed_password,
-                     date_of_birth=admin.date_of_birth)
+                     hashed_password=hashed_password)
     db.add(db_admin)
     db.commit()
     db.refresh(db_admin)
@@ -26,12 +27,14 @@ def create_teacher(db: Session, teacher: TeacherCreate):
     # Проверка на уникальность username
     db_teacher = db.query(Teacher).filter(Teacher.username == teacher.username).first()
     if db_teacher:
-        raise ValueError("Такой username уже существует")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="Имя пользователя уже занято.")
 
     hashed_password = get_password_hash(teacher.password)
     db_teacher = Teacher(username=teacher.username,
                          hashed_password=hashed_password,
-                         date_of_birth=teacher.date_of_birth)
+                         phone=teacher.phone,
+                         subject=teacher.subject)
     db.add(db_teacher)
     db.commit()
     db.refresh(db_teacher)
@@ -47,12 +50,12 @@ def create_parent(db: Session, parent: ParentCreate):
 
     hashed_password = get_password_hash(parent.password)
     db_parent = Parent(username=parent.username,
-                       hashed_password=hashed_password,
-                       date_of_birth=parent.date_of_birth)
+                       hashed_password=hashed_password)
     db.add(db_parent)
     db.commit()
     db.refresh(db_parent)
     return db_parent
+
 
 # Создание ребенка администратором
 def create_child_by_admin(db: Session, child: ChildCreateByAdmin):

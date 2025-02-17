@@ -5,7 +5,6 @@ from typing import List
 # Админ
 class AdminBase(BaseModel):
     username: str
-    date_of_birth: date
 
 class AdminCreate(AdminBase):
     password: str
@@ -21,7 +20,6 @@ class AdminResponse(AdminBase):
 class TeacherBase(BaseModel):
     username: constr(min_length=3, max_length=20)
     phone: constr(min_length=10, max_length=15)
-    date_of_birth: date
     subject: str
 
 class TeacherCreate(TeacherBase):
@@ -36,7 +34,6 @@ class TeacherResponse(TeacherBase):
 class ParentBase(BaseModel):
     username: constr(min_length=3, max_length=20)
     phone: constr(min_length=10, max_length=15)
-    date_of_birth: date
 
 class ParentCreate(ParentBase):
     password: constr(min_length=8)
@@ -83,6 +80,11 @@ class LessonResponse(LessonBase):
 
     model_config = ConfigDict(from_attributes=True)
 
+# Модель для входа через JSON
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
 
 """
 
@@ -105,8 +107,4 @@ class PaymentResponse(PaymentBase):
     id: int
 
     model_config = ConfigDict(from_attributes=True)
-
-
-
-
 

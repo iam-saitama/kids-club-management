@@ -1,21 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Регистрация учителя{% endblock %}
+{% block title %}Регистрация администратора{% endblock %}
 
 {% block content %}
-    <h2>Регистрация учителя</h2>
-    <form action="/register/teacher" method="post" class="ajax-form">
+    <h2>Регистрация администратора</h2>
+    <form action="/admin/register" method="post" class="ajax-form">
         <label for="username">Имя пользователя:</label>
         <input type="text" id="username" name="username" required minlength="3" maxlength="50" placeholder="Введите имя">
 
-        <label for="phone">Телефон:</label>
-        <input type="tel" id="phone" name="phone" required placeholder="+998 (XX) XXX-XX-XX">
-
         <label for="password">Пароль:</label>
         <input type="password" id="password" name="password" required minlength="8" placeholder="Минимум 8 символов">
-
-        <label for="subject">Предмет:</label>
-        <input type="text" id="subject" name="subject" required placeholder="Например, Математика">
 
         <button type="submit">Зарегистрироваться</button>
         <p class="message"></p>

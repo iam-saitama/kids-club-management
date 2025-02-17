@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Личный кабинет администратора{% endblock %}
+
+{% block content %}
+    <h2>Личный кабинет администратора</h2>
+    
+    <div id="admin-info">
+        <p><strong>Имя пользователя:</strong> <span id="admin-username">Загрузка...</span></p>
+        <p><strong>Статус:</strong> <span id="admin-status">Загрузка...</span></p>
+    </div>
+
+    <p class="error-message" style="color: red; display: none;"></p>
+
+{% endblock %}

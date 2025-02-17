@@ -63,7 +63,7 @@ def get_current_parent(current_user: User = Depends(get_current_user)):
         raise HTTPException(status_code=403, detail="У Вас нет прав родителя")
     return current_user
 
-# Если нужен учитель текущий (лол)
+# Если нужен учитель текущий
 def get_current_teacher(current_user: User = Depends(get_current_user)):
     if not isinstance(current_user, Teacher):
         raise HTTPException(status_code=403, detail="У Вас нет прав учителя")

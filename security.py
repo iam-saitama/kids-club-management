@@ -1,13 +1,13 @@
 from datetime import datetime, timedelta
 from jose import jwt
 from passlib.context import CryptContext
-from os import getenv
+import os
 from dotenv import load_dotenv
 
 # Загружаем переменные окружения из .env
 load_dotenv()
 
-SECRET_KEY = getenv("djlgdldgbvxdhg")
+SECRET_KEY = os.getenv("secret_key")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 

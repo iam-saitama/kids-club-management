@@ -2,21 +2,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector(".ajax-form");
     if (!form) return;
 
+    // Проверяем, есть ли поле для телефона (регистрация)
     const phoneInput = document.getElementById("phone");
 
+    // Обработка телефона (только для регистрации)
     if (phoneInput) {
         phoneInput.addEventListener("input", function () {
-            let value = phoneInput.value.replace(/\D/g, ""); // Убираем все нецифровые символы
+            let value = phoneInput.value.replace(/\D/g, "");
 
             if (!value.startsWith("998")) {
-                value = "998"; // Если удалили всё, оставляем только код страны
+                value = "998";
             }
 
             if (value.length > 12) {
-                value = value.slice(0, 12); // Ограничиваем длину
+                value = value.slice(0, 12);
             }
 
-            // Форматируем номер
             let formattedValue = "+998 ";
             if (value.length > 3) formattedValue += "(" + value.slice(3, 5);
             if (value.length > 5) formattedValue += ") " + value.slice(5, 8);
@@ -27,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         phoneInput.addEventListener("keydown", function (event) {
-            // Блокируем удаление "+998 " при нажатии Backspace или Delete
             if ((phoneInput.value === "+998 " || phoneInput.value === "+998 (") &&
                 (event.key === "Backspace" || event.key === "Delete")) {
                 event.preventDefault();
@@ -35,21 +35,21 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-
+    // Обработка отправки формы
     form.addEventListener("submit", async function (event) {
-        event.preventDefault(); // Отменяем стандартное поведение формы
+        event.preventDefault();
 
-        const rawPhone = phoneInput ? phoneInput.value.replace(/\D/g, "") : "";
-
-        // Собираем данные формы
+        // Подготовка данных для отправки
         const formData = {
             username: form.username.value,
-            phone: rawPhone, // Отправляем номер без форматирования
-            password: form.password.value,
-            date_of_birth: form.date_of_birth ? form.date_of_birth.value : null,
-            subject: form.subject ? form.subject.value : null,
-            experience_years: form.experience_years ? form.experience_years.value : null
+            password: form.password.value
         };
+
+        // Если это регистрация, добавляем телефон и предмет
+        if (phoneInput) {
+            formData.phone = phoneInput.value.replace(/\D/g, "");
+            formData.subject = form.subject.value;  // Добавляем предмет
+        }
 
         console.log("Отправляем JSON:", JSON.stringify(formData));
 
@@ -71,9 +71,19 @@ document.addEventListener("DOMContentLoaded", function () {
             if (response.ok) {
                 messageBox.textContent = result.message;
                 messageBox.style.color = "green";
-                form.reset();
+
+                // Перенаправление после успешной регистрации или входа
+                if (window.location.pathname === "/register") {
+                    setTimeout(() => {
+                        window.location.href = "/login";
+                    }, 1500);
+                } else if (window.location.pathname === "/login") {
+                    setTimeout(() => {
+                        window.location.href = "/parent/account";
+                    }, 1500);
+                }
             } else {
-                messageBox.textContent = result.detail || "Ошибка при регистрации.";
+                messageBox.textContent = result.detail || "Ошибка.";
                 messageBox.style.color = "red";
             }
         } catch (error) {

@@ -11,7 +11,7 @@ class Admin(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
     hashed_password = Column(String)
-    date_of_birth = Column(Date)
+
 
 
 # Учитель
@@ -21,17 +21,22 @@ class Teacher(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
     hashed_password = Column(String)
-    date_of_birth = Column(Date)
+    phone = Column(String)
+    subject = Column(String)
 
     # Связь с уроками
     lessons = relationship("Lesson", back_populates="teacher")
 
 
-""" НЕКРАСИВО КАК-ТО """
+
 # Таблица для связи родителей и детей
-child_parent_association = Table("child_parent_association", Base.metadata,
-                                 Column("parent_id", ForeignKey("parents.id"), primary_key=True),
-                                 Column("child_id", ForeignKey("children.id"), primary_key=True))
+child_parent_association = Table(
+    "child_parent_association",
+    Base.metadata,
+    Column("parent_id", ForeignKey("parents.id"), primary_key=True),
+    Column("child_id", ForeignKey("children.id"), primary_key=True)
+)
+
 
 # Родитель
 class Parent(Base):
@@ -40,7 +45,8 @@ class Parent(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
     hashed_password = Column(String)
-    date_of_birth = Column(Date)
+    phone = Column(String)
+
 
     # Связь с детьми
     children = relationship("Child", secondary=child_parent_association, back_populates="parents")

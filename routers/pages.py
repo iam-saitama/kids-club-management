@@ -24,7 +24,12 @@ def login_page(request: Request):
 # Страница выбора роли
 @page_router.get("/register", response_class=HTMLResponse)
 def register_page(request: Request):
-    return templates.TemplateResponse("register.html", {"request": request})
+    return templates.TemplateResponse("register_role.html", {"request": request})
+
+# Страница регистрации учителя
+@page_router.get("/register/admin", response_class=HTMLResponse)
+def register_admin_page(request: Request):
+    return templates.TemplateResponse("register_admin.html", {"request": request})
 
 # Страница регистрации учителя
 @page_router.get("/register/teacher", response_class=HTMLResponse)

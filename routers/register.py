@@ -26,12 +26,10 @@ def register_parent(parent: ParentCreate,
 @register_router.post("/teacher", response_class=JSONResponse)
 def register_teacher(teacher: TeacherCreate,
                      db: Session = Depends(get_db)):
-    # Здесь так же проверяем, существует ли такой username
     db_teacher = get_user_by_username(db, username=teacher.username)
     if db_teacher:
         raise HTTPException(status_code=400, detail="Имя пользователя уже занято.")
 
-    # Создаем нового учителя
     new_teacher = create_teacher(db=db, teacher=teacher)
     return JSONResponse(
         content={"success": True, "message": "Учитель успешно зарегистрирован.", "teacher_id": new_teacher.id})
